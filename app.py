@@ -13,7 +13,7 @@ model=load_model('keras_mode_final.h5')
 yfin.pdr_override()
 start='2013-02-15'
 end=dt.datetime.now()
-st.title('cryptocurrency and stock price predictor')
+st.title('Cryptocurrency and Stock price predictor')
 user_input=st.text_input('Enter The Crypto name or Stock Ticker','BTC-USD')
 df = pdr.get_data_yahoo(user_input, start, end)
 
