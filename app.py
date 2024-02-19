@@ -120,7 +120,7 @@ today = dt.date.today()
 
 dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
 
-st.subheader('prediction of the prices in next 5 days')
+st.subheader('Prediction of the Prices in next 5 days')
 fig=plt.figure(figsize=(12, 6))
 plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
 plt.xlabel('Time')
@@ -129,4 +129,4 @@ plt.legend()
 st.pyplot(fig)
 
 
-st.subheader(f'Crypnosys recommends these Prices for you {y_predicted_new[2][0]} - {y_predicted_new[6][0]}')
+st.subheader(f'Crypnosys recommends you these range of Price {y_predicted_new[2][0]} - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
