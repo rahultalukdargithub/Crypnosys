@@ -127,3 +127,6 @@ plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
 st.pyplot(fig)
+
+
+st.subheader(f'Crypnosys recommends these Prices for you {y_predicted_new[2][0]} - {y_predicted_new[6][0]}')
