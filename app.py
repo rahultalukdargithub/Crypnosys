@@ -129,4 +129,9 @@ plt.legend()
 st.pyplot(fig)
 
 
-st.subheader(f'Crypnosys recommends you these range of Price {y_predicted_new[2][0]} - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
+if(y_predicted_new[2][0] > y_predicted_new[6][0]):
+    st.subheader(f'Crypnosys predicts these range of Price {y_predicted_new[6][0]} - {y_predicted_new[2][0]} in {user_input} for the next 5 days')
+elif(y_predicted_new[2][0] < y_predicted_new[6][0]):
+    st.subheader(f'Crypnosys predicts these range of Price {y_predicted_new[2][0]} - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
+else:
+    st.subheader(f'Crypnosys predicts the Price will be same - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
