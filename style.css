@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet'); 
+
+html, body, [class*="css"] {
+    font-family: "Allerta Stencil", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+}
+div.st-emotion-cache-l9bjmx.e1nzilvr5 p{
+  font-family: "Allerta Stencil", sans-serif;
+  font-size: 18px;
+  font-weight:bold;
+}
+header.st-emotion-cache-18ni7ap.ezrtsby2{
+    background-color: #e9edf9;
+    font-family: "Allerta Stencil", sans-serif;
+}
+span.st-emotion-cache-10trblm.e1nzilvr1{
+    background-color: #e9edf9;
+    color: #1c2842;
+    font-family: "Allerta Stencil", sans-serif;
+}
+button.st-emotion-cache-sa9oi8.ef3psqc5{
+  background-color: #e9edf9;
+  color: #1c2842;
+  font-family: "Allerta Stencil", sans-serif;
+}
+div.appview-container.st-emotion-cache-1wrcr25.ea3mdgi9{
+  background-color: #e9edf9;
+  font-family: "Allerta Stencil", sans-serif;
+}
+p{
+  color: #1c2842;
+  font-family: "Allerta Stencil", sans-serif;
+}
+element{
+  max-width: 50%;
+}
+div.st-emotion-cache-1kyxreq.e115fcil2{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60%;
+}
