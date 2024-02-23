@@ -128,7 +128,7 @@ today = dt.date.today()
 
 dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
 
-st.subheader('prediction of the prices in next 5 days')
+st.subheader('Prediction of the Prices in next 5 days')
 fig=plt.figure(figsize=(12, 6))
 plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
 plt.xlabel('Time')
