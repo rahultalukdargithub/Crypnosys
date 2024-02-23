@@ -1,3 +1,4 @@
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,14 +8,21 @@ import datetime as dt
 from keras.models import load_model
 import streamlit as st
 
+from PIL import Image
+import cv2
+img = Image.open("logo1.jpg")
+st.image(
+  img,
+)
 
+with open('style.css') as f:
+  st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
 model=load_model('keras_mode_final.h5')
 
 yfin.pdr_override()
 start='2013-02-15'
 end=dt.datetime.now()
-st.title('Cryptocurrency and Stock price predictor')
-user_input=st.text_input('Enter The Crypto name or Stock Ticker','BTC-USD')
+user_input=st.text_input('Enter The Crypto name or Stock Ticker:','BTC-USD')
 df = pdr.get_data_yahoo(user_input, start, end)
 
 
@@ -120,13 +128,14 @@ today = dt.date.today()
 
 dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
 
-st.subheader('Prediction of the Prices in next 5 days')
+st.subheader('prediction of the prices in next 5 days')
 fig=plt.figure(figsize=(12, 6))
 plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
 plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
 st.pyplot(fig)
+
 
 if(y_predicted_new[2][0] > y_predicted_new[6][0]):
     st.subheader(f'Crypnosys predicts these range of Price {y_predicted_new[6][0]} - {y_predicted_new[2][0]} in {user_input} for the next 5 days')
