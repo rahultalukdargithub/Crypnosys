@@ -9,7 +9,7 @@ from keras.models import load_model
 import streamlit as st
 
 from PIL import Image
-import cv2
+
 img = Image.open("logo1.jpg")
 st.image(
   img,
