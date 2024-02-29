@@ -12,8 +12,6 @@ import tickerlist
 import re
 import plotly.graph_objects as go
 
-from PIL import Image
-
 image_path = "logo.jpg"
 
 import base64
