@@ -7,7 +7,6 @@ import yfinance as yfin
 import datetime as dt
 from keras.models import load_model
 import streamlit as st
-from yahooquery import Screener
 import tickerlist
 import re
 import plotly.graph_objects as go
