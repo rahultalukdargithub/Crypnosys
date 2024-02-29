@@ -24,3 +24,6 @@ tensorflow==2.15.0
 tensorflow-estimator==2.15.0
 yfinance==0.2.36
 
+plotly
+re
+base64
