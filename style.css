@@ -45,13 +45,7 @@ div.st-emotion-cache-1kyxreq.e115fcil2{
   display: block;
   max-width: 60%;
 }
-div[data-baseweb="select"] > div {
-    background-color: #fffcdd;
-    font-weight: bold;
-}
-div[role="listbox"] ul {
-    background-color: red;
-}
+
 span.st-emotion-cache-10trblm.e1nzilvr1{
   text-decoration: underline;
   text-decoration-color: #ffdb76;
