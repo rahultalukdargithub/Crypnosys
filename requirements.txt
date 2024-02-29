@@ -25,4 +25,4 @@ tensorflow-estimator==2.15.0
 yfinance==0.2.36
 
 plotly
-base64
+
