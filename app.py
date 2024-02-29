@@ -18,15 +18,12 @@ image_path = "logo.jpg"
 
 import base64
 
-# Define your local image pat
 
-# Read the image file as bytes
 image_bytes = open(image_path, "rb").read()
 
-# Convert the image to base64
+
 image_base64 = base64.b64encode(image_bytes).decode()
 
-# Use HTML to align the image in the center
 st.markdown(
     f'<div style="display: flex; justify-content: center;">'
     f'<img src="data:image/jpeg;base64,{image_base64}" style="width: 70%;" />'
