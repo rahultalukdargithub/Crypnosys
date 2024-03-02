@@ -87,13 +87,19 @@ today=dt.date.today()
 st.subheader(f'Data upto {today}')
 st.write(df.describe())
 
+
+dfs=df
+dfs=dfs.reset_index()
+dfs = dfs.set_index(pd.DatetimeIndex(dfs['Date'].values))
 st.subheader("Data Visualization")
 fig = go.Figure(data=[go.Candlestick(x=df.index,
                 open=df['Open'],
                 high=df['High'],
                 low=df['Low'],
-                close=df['Close'])])
-fig.update_layout(xaxis_rangeslider_visible=False, title=f'Visualize The Data of {user_input}',
+                close=df['Close'],
+                increasing_line_color = 'green',
+                decreasing_line_color='red')])
+fig.update_layout(title=f'Visualize The Data of {user_input}',
                   xaxis_title='Date', yaxis_title='Price')
 
 st.plotly_chart(fig)
