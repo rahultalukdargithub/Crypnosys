@@ -88,7 +88,7 @@ st.subheader(f'Data upto {today}')
 st.write(df.describe())
 
 
-dfs=df
+dfs=df.tail(200)
 dfs=dfs.reset_index()
 dfs = dfs.set_index(pd.DatetimeIndex(dfs['Date'].values))
 st.subheader("Data Visualization")
