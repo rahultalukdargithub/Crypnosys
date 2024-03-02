@@ -100,7 +100,7 @@ fig = go.Figure(data=[go.Candlestick(x=df.index,
                 increasing_line_color = 'green',
                 decreasing_line_color='red')])
 fig.update_layout(title=f'Visualize The Data of {user_input}',
-                  xaxis_title='Date', yaxis_title='Price')
+                  xaxis_title='Date', yaxis_title='Price',width=860,height=600,margin=dict(l=50, r=50, t=50, b=50) )
 
 st.plotly_chart(fig)
 
