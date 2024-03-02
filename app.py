@@ -92,11 +92,11 @@ dfs=df.tail(200)
 dfs=dfs.reset_index()
 dfs = dfs.set_index(pd.DatetimeIndex(dfs['Date'].values))
 st.subheader("Data Visualization")
-fig = go.Figure(data=[go.Candlestick(x=df.index,
-                open=df['Open'],
-                high=df['High'],
-                low=df['Low'],
-                close=df['Close'],
+fig = go.Figure(data=[go.Candlestick(x=dfs.index,
+                open=dfs['Open'],
+                high=dfs['High'],
+                low=dfs['Low'],
+                close=dfs['Close'],
                 increasing_line_color = 'green',
                 decreasing_line_color='red')])
 fig.update_layout(title=f'Visualize The Data of {user_input}',
