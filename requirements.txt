@@ -2,23 +2,16 @@
 
 
 
+
+
 matplotlib==3.5.3
-matplotlib-inline==0.1.6
-
 numpy==1.26.4
-
-pandas==2.1.4
-pandas-datareader==0.10.0
-
-
-scikit-build==0.15.0
-scikit-learn==1.2.1
-
-
-
+pandas==2.2.1
+pandas_datareader==0.10.0
+pandas_ta==0.3.14b0
+plotly==5.19.0
+Requests==2.31.0
+scikit_learn==1.2.1
+streamlit==1.31.1
+xgboost==2.0.3
 yfinance==0.2.36
-
-plotly
-pandas_ta
-requests
-xgboost
