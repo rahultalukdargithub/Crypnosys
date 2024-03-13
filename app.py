@@ -16,7 +16,7 @@ import pandas_ta as ta
 import plotly.express as px
 from sklearn.preprocessing import RobustScaler
 import xgboost as xgb
-image_path = "logo.jpg"
+image_path = "logo.png"
 
 import base64
 
