@@ -11,7 +11,8 @@ pandas==2.1.4
 pandas-datareader==0.10.0
 
 
-
+scikit-build==0.15.0
+scikit-learn==1.2.1
 
 streamlit==1.31.1
 
