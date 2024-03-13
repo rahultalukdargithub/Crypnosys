@@ -14,7 +14,8 @@ import requests
 import time
 import pandas_ta as ta
 import plotly.express as px
-
+from sklearn.preprocessing import RobustScaler
+import xgboost as xgb
 image_path = "logo.jpg"
 
 import base64
@@ -134,7 +135,7 @@ st.pyplot(fig)
 data_training=pd.DataFrame(df['Close'][0:int(len(df)*0.80)])
 data_testing=pd.DataFrame(df['Close'][int(len(df)*0.80):int(len(df))])
 
-from sklearn.preprocessing import RobustScaler
+
 # scaler=MinMaxScaler(feature_range=(0,1))
 scaler=RobustScaler()
 
@@ -150,7 +151,7 @@ for i in range(200,data_training_array.shape[0]):
 
 
 x_train,y_train = np.array(x_train),np.array(y_train)
-import xgboost as xgb
+
 model = xgb.XGBRegressor(n_estimators=170,learning_rate=0.08, max_depth=3)
 x_train = x_train.reshape(x_train.shape[0], -1)
 model.fit(x_train, y_train)
@@ -292,7 +293,7 @@ while True:
 
             dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
 
-            st.subheader(f'prediction of the prices {selected} in next 5 days')
+            st.subheader('prediction of the prices in next 5 days')
             fig=plt.figure(figsize=(12, 6))
             plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
             plt.xlabel('Time')
