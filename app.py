@@ -227,7 +227,7 @@ while True:
                     data.timestamp=pd.to_datetime(data.timestamp,unit="s")
                     data["rsi"]= ta.rsi(data.close.astype(float))
                     data=data.iloc[14:]
-                    print(data)
+                    
                     fig = go.Figure(data=[go.Candlestick(x=data.timestamp,
                                 open=data.open,
                                 high=data.high,
@@ -248,7 +248,7 @@ while True:
                         data.Datetime = pd.to_datetime(data['Datetime']).dt.strftime('%Y-%m-%d %H:%M:%S')
                         data["rsi"]= ta.rsi(data.Close.astype(float))
                         data=data.tail(14)
-                        print(data)
+                        
                         fig = go.Figure(data=[go.Candlestick(x=data.Datetime,
                                                 open=data.Open,
                                                 high=data.High,
