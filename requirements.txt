@@ -25,3 +25,7 @@ tensorflow-estimator==2.15.0
 yfinance==0.2.36
 
 plotly
+pandas_ta
+time
+requests
+xgboost
