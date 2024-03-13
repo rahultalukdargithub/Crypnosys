@@ -26,6 +26,5 @@ yfinance==0.2.36
 
 plotly
 pandas_ta
-time
 requests
 xgboost
