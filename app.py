@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from pandas_datareader import data as pdr
 import yfinance as yfin
 import datetime as dt
-from keras.models import load_model
+# from keras.models import load_model
 import streamlit as st
 import tickerlist
 import re
