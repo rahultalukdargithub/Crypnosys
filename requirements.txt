@@ -1,7 +1,6 @@
 
 
-keras==2.15.0
-Keras-Preprocessing==1.1.2
+
 
 matplotlib==3.5.3
 matplotlib-inline==0.1.6
@@ -11,17 +10,11 @@ numpy==1.26.4
 pandas==2.1.4
 pandas-datareader==0.10.0
 
-protobuf==4.25.3
 
 
-
-scikit-build==0.15.0
-scikit-learn==1.2.1
 
 streamlit==1.31.1
 
-tensorflow==2.15.0
-tensorflow-estimator==2.15.0
 yfinance==0.2.36
 
 plotly
