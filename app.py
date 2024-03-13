@@ -10,6 +10,10 @@ import streamlit as st
 import tickerlist
 import re
 import plotly.graph_objects as go
+import requests
+import time
+import pandas_ta as ta
+import plotly.express as px
 
 image_path = "logo.jpg"
 
@@ -30,7 +34,7 @@ st.markdown(
 
 with open('style.css') as f:
   st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
-model=load_model('keras_mode_final.h5')
+# model=load_model('keras_mode_final.h5')
 
 # Function to get data with caching
 def get_data(user_input, start, end):
@@ -111,12 +115,12 @@ st.pyplot(fig)
 
 
 
-st.subheader('Closing Price vs Time chart with 100MA')
-fig=plt.figure(figsize=(12,6))
-plt.plot(df.Close)
-ma100=df.Close.rolling(100).mean()
-plt.plot(ma100,'r')
-st.pyplot(fig)
+# st.subheader('Closing Price vs Time chart with 100MA')
+# fig=plt.figure(figsize=(12,6))
+# plt.plot(df.Close)
+# ma100=df.Close.rolling(100).mean()
+# plt.plot(ma100,'r')
+# st.pyplot(fig)
 
 st.subheader('Closing Price vs Time chart with 100MA and 200MA')
 ma100=df.Close.rolling(100).mean()
@@ -130,9 +134,27 @@ st.pyplot(fig)
 data_training=pd.DataFrame(df['Close'][0:int(len(df)*0.80)])
 data_testing=pd.DataFrame(df['Close'][int(len(df)*0.80):int(len(df))])
 
-from sklearn.preprocessing import MinMaxScaler
-scaler=MinMaxScaler(feature_range=(0,1))
+from sklearn.preprocessing import RobustScaler
+# scaler=MinMaxScaler(feature_range=(0,1))
+scaler=RobustScaler()
+
 data_training_array = scaler.fit_transform(data_training)
+
+x_train=[]
+y_train=[]
+
+
+for i in range(200,data_training_array.shape[0]):
+  x_train.append(data_training_array[i-200:i])
+  y_train.append(data_training_array[i,0])
+
+
+x_train,y_train = np.array(x_train),np.array(y_train)
+import xgboost as xgb
+model = xgb.XGBRegressor(n_estimators=170,learning_rate=0.08, max_depth=3)
+x_train = x_train.reshape(x_train.shape[0], -1)
+model.fit(x_train, y_train)
+
 
 past_200_days=data_training.tail(200)
 final_df=past_200_days._append(data_testing,ignore_index=True)
@@ -140,95 +162,166 @@ input_data=scaler.fit_transform(final_df)
 
 
 
-x_test=[]
-y_test=[]
+# x_test=[]
+# y_test=[]
 
-for i in range(200,input_data.shape[0]):
-  x_test.append(input_data[i-200:i])
-  y_test.append(input_data[i,0])
-
-
-x_test,y_test=np.array(x_test),np.array(y_test)
-
-y_predicted2=model.predict(x_test)
-y_predicted2=scaler.inverse_transform(y_predicted2)
-y_test=np.array(y_test)
-y_test=y_test.reshape(y_test.shape[0],1)
-y_test=scaler.inverse_transform(y_test)
-
-st.subheader('Prediction vs Original')
-fig=plt.figure(figsize=(12,6))
-plt.plot(y_test,'b',label='Original Price')
-plt.plot(y_predicted2,'r',label='Predicted Price')
-plt.xlabel('Time')
-plt.ylabel('Price')
-plt.legend()
-st.pyplot(fig)
+# for i in range(200,input_data.shape[0]):
+#   x_test.append(input_data[i-200:i])
+#   y_test.append(input_data[i,0])
 
 
-x_test2=[]
-x_test2.append(input_data[input_data.shape[0]-200:input_data.shape[0]])
-x_test2=np.array(x_test2)
+# x_test,y_test=np.array(x_test),np.array(y_test)
+
+# y_predicted2=model.predict(x_test)
+# y_predicted2=scaler.inverse_transform(y_predicted2)
+# y_test=np.array(y_test)
+# y_test=y_test.reshape(y_test.shape[0],1)
+# y_test=scaler.inverse_transform(y_test)
+
+# st.subheader('Prediction vs Original')
+# fig=plt.figure(figsize=(12,6))
+# plt.plot(y_test,'b',label='Original Price')
+# plt.plot(y_predicted2,'r',label='Predicted Price')
+# plt.xlabel('Time')
+# plt.ylabel('Price')
+# plt.legend()
+# st.pyplot(fig)
 
 
-inputt=input_data
-
-
-x_test2=[]
-y_predicted_new=[]
-
-inputtt=input_data
-
-for i in range(7):
-  x_test2.append(inputtt[inputtt.shape[0]-200-2:inputtt.shape[0]-2])
-  x_test2=np.array(x_test2)
-  x_test2=np.reshape(x_test2, (1, x_test2.shape[1], 1))
-  y_temp=model.predict(x_test2)
-  x_test2 = []
-  y_predicted_new.append(y_temp[0])
-  # inputtt.append(np.array(y_temp[0]))
-  inputtt=np.append(inputtt, [np.array(y_temp[0])], axis=0)
-
-
-
-y_predicted_new=np.array(y_predicted_new)
-
-
-y_predicted_new=scaler.inverse_transform(y_predicted_new)
-
-today = dt.date.today()
-
-dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
-
-st.subheader('Prediction of the Prices in next 5 days')
-fig=plt.figure(figsize=(12, 6))
-plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
-plt.xlabel('Time')
-plt.ylabel('Price')
-plt.legend()
-st.pyplot(fig)
-
-
-if(y_predicted_new[2][0] > y_predicted_new[6][0]):
-    st.write(f'Crypnosys predicts these range of Price {y_predicted_new[6][0]} - {y_predicted_new[2][0]} in {user_input} for the next 5 days')
-elif(y_predicted_new[2][0] < y_predicted_new[6][0]):
-    st.write(f'Crypnosys predicts these range of Price {y_predicted_new[2][0]} - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
+col1, col2 = st.columns(2)
+if(asset_type == "Cryptocurrency"):
+    with col1:
+        timeFrame = st.selectbox('Select The Time-Frame:', ["60", "3600", "86400"])
+    with col2:
+        nbars = st.selectbox('Select number of bars:', ["20", "50", "100"])
 else:
-    st.write(f'Crypnosys predicts the Price will be same - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
-st.markdown("<div id='custom-divider'></div>", unsafe_allow_html=True)
-st.caption("These results have been generated by a machine and may differ from actual values. Use them at your own risk.")
+    valid_periods = ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
+    valid_intervals = ['1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo']
+    with col1:
+        per = st.selectbox('Select The Period :', valid_periods)
+    with col2:  
+        interva = st.selectbox('Select The Interval :', valid_intervals)  
+    
+    
 
-image_url = "https://cdn-icons-png.flaticon.com/256/3670/3670209.png"
 
-# Link URL
-link_url = "https://www.youtube.com/channel/UCDaKB-foogVsUBI3yyQXzag"
 
-# Image size
-image_width = 45
-image_height = 45
+st.subheader('Stream The Live Data')
+placeholder=st.empty()
+while True:
+        with placeholder.container():
 
-# Display image with embedded link
-st.markdown(
-    f"<div style='display: flex; justify-content: center;'><a href='{link_url}' target='_blank'><img src='{image_url}' width='{image_width}' height='{image_height}'></a></div>",
-    unsafe_allow_html=True
-)
+            try:
+                if(asset_type == "Cryptocurrency"):
+                    original_string = extract_content_within_brackets(selected)
+                    modified_string = original_string.lower().replace("-", "")
+                    
+                    url =f"https://www.bitstamp.net/api/v2/ohlc/{modified_string}/"
+                    params={
+                        "step":timeFrame,
+                        "limit":int(nbars)+14,
+                    }
+                    data=requests.get(url,params=params).json()["data"]["ohlc"]
+                    data = pd.DataFrame(data)
+                    data.timestamp=pd.to_datetime(data.timestamp,unit="s")
+                    data["rsi"]= ta.rsi(data.close.astype(float))
+                    data=data.iloc[14:]
+                    print(data)
+                    fig = go.Figure(data=[go.Candlestick(x=data.timestamp,
+                                open=data.open,
+                                high=data.high,
+                                low=data.low,
+                                close=data.close,
+                                )])
+                    fig.update_layout(title=f'Recent Price of {selected}',
+                        xaxis_title='Date', yaxis_title='Price',width=890,xaxis_rangeslider_visible=False,height=500,margin=dict(l=50, r=50, t=50, b=50) )            
+                    indicator =px.line(x=data.timestamp,y=data.rsi,height =200,width=860)
+                    time.sleep(0.25)  
+                    st.plotly_chart(fig)
+                    st.plotly_chart(indicator)
+                else:
+                    try:
+                        data = yfin.download(tickers=extract_content_within_brackets(selected), period=per, interval=interva,rounding=True,auto_adjust=True)
+                        data = pd.DataFrame(data)
+                        data=data.reset_index()
+                        data.Datetime = pd.to_datetime(data['Datetime']).dt.strftime('%Y-%m-%d %H:%M:%S')
+                        data["rsi"]= ta.rsi(data.Close.astype(float))
+                        data=data.tail(14)
+                        print(data)
+                        fig = go.Figure(data=[go.Candlestick(x=data.Datetime,
+                                                open=data.Open,
+                                                high=data.High,
+                                                low=data.Low,
+                                                close=data.Close,
+                                                )])
+                        fig.update_layout(title=f'Recent Price of {selected}',
+                                        xaxis_title='Date', yaxis_title='Price',width=890,xaxis_rangeslider_visible=False,height=500,margin=dict(l=50, r=50, t=50, b=50) ) 
+                                
+                        indicator =px.line(x=data.Datetime,y=data.rsi,height =200,width=860)   
+                        time.sleep(0.25)  
+                        st.plotly_chart(fig)
+                        st.plotly_chart(indicator)
+                    except Exception as e:
+                        st.write("Try again with different value of Period and Interval , if its not working then we will Soon Add It ")
+            except Exception as e: 
+                st.write("We Will Soon Add It")
+                
+                    
+            y_predicted_new=[]
+            x_test2=[]
+            inputtt=input_data
+
+            for i in range(7):
+                x_test2.append(inputtt[inputtt.shape[0]-200-2:inputtt.shape[0]-2])
+                x_test2=np.array(x_test2)
+                x_test2=np.reshape(x_test2, (1, x_test2.shape[1]))
+                # x_test2 = x_test2.reshape(x_test.shape[0], -1)
+                y_temp=model.predict(x_test2)
+                x_test2 = []
+                y_predicted_new.append(y_temp)
+                # inputtt.append(np.array(y_temp[0]))
+                inputtt=np.append(inputtt, [np.array(y_temp)], axis=0)
+
+            y_predicted_new=np.array(y_predicted_new)
+
+            y_predicted_new =y_predicted_new.reshape(-1, 1)
+
+            y_predicted_new=scaler.inverse_transform(y_predicted_new)
+
+            today = dt.date.today()
+
+            dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
+
+            st.subheader(f'prediction of the prices {selected} in next 5 days')
+            fig=plt.figure(figsize=(12, 6))
+            plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
+            plt.xlabel('Time')
+            plt.ylabel('Price')
+            plt.legend()
+            st.pyplot(fig)
+            if(y_predicted_new[2][0] > y_predicted_new[6][0]):
+                st.write(f'Crypnosys predicts these range of Price {y_predicted_new[6][0]} - {y_predicted_new[2][0]} in {user_input} for the next 5 days')
+            elif(y_predicted_new[2][0] < y_predicted_new[6][0]):
+                st.write(f'Crypnosys predicts these range of Price {y_predicted_new[2][0]} - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
+            else:
+                st.write(f'Crypnosys predicts the Price will be same - {y_predicted_new[6][0]} in {user_input} for the next 5 days')
+            st.markdown("<div id='custom-divider'></div>", unsafe_allow_html=True)
+            st.caption("These results have been generated by a machine and may differ from actual values. Use them at your own risk.")
+            
+            image_url = "https://cdn-icons-png.flaticon.com/256/3670/3670209.png"
+            
+            # Link URL
+            link_url = "https://www.youtube.com/channel/UCDaKB-foogVsUBI3yyQXzag"
+            
+            # Image size
+            image_width = 45
+            image_height = 45
+            
+            # Display image with embedded link
+            st.markdown(
+                f"<div style='display: flex; justify-content: center;'><a href='{link_url}' target='_blank'><img src='{image_url}' width='{image_width}' height='{image_height}'></a></div>",
+                unsafe_allow_html=True
+            )
+
+
+
