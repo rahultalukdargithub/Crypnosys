@@ -214,7 +214,7 @@ while True:
 
             try:
                 if(asset_type == "Cryptocurrency"):
-                    original_string = extract_content_within_brackets(selected)
+                    original_string = extract_content_within_brackets(user_input)
                     modified_string = original_string.lower().replace("-", "")
                     
                     url =f"https://www.bitstamp.net/api/v2/ohlc/{modified_string}/"
@@ -234,7 +234,7 @@ while True:
                                 low=data.low,
                                 close=data.close,
                                 )])
-                    fig.update_layout(title=f'Recent Price of {selected}',
+                    fig.update_layout(title=f'Recent Price of {user_input}',
                         xaxis_title='Date', yaxis_title='Price',width=890,xaxis_rangeslider_visible=False,height=500,margin=dict(l=50, r=50, t=50, b=50) )            
                     indicator =px.line(x=data.timestamp,y=data.rsi,height =200,width=860)
                     time.sleep(0.25)  
@@ -242,7 +242,7 @@ while True:
                     st.plotly_chart(indicator)
                 else:
                     try:
-                        data = yfin.download(tickers=extract_content_within_brackets(selected), period=per, interval=interva,rounding=True,auto_adjust=True)
+                        data = yfin.download(tickers=extract_content_within_brackets(user_input), period=per, interval=interva,rounding=True,auto_adjust=True)
                         data = pd.DataFrame(data)
                         data=data.reset_index()
                         data.Datetime = pd.to_datetime(data['Datetime']).dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -255,7 +255,7 @@ while True:
                                                 low=data.Low,
                                                 close=data.Close,
                                                 )])
-                        fig.update_layout(title=f'Recent Price of {selected}',
+                        fig.update_layout(title=f'Recent Price of {user_input}',
                                         xaxis_title='Date', yaxis_title='Price',width=890,xaxis_rangeslider_visible=False,height=500,margin=dict(l=50, r=50, t=50, b=50) ) 
                                 
                         indicator =px.line(x=data.Datetime,y=data.rsi,height =200,width=860)   
@@ -293,7 +293,7 @@ while True:
 
             dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
 
-            st.subheader('prediction of the prices in next 5 days')
+            st.subheader(f'prediction of the prices of {user_input} in next 5 days')
             fig=plt.figure(figsize=(12, 6))
             plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
             plt.xlabel('Time')
@@ -323,6 +323,3 @@ while True:
                 f"<div style='display: flex; justify-content: center;'><a href='{link_url}' target='_blank'><img src='{image_url}' width='{image_width}' height='{image_height}'></a></div>",
                 unsafe_allow_html=True
             )
-
-
-
