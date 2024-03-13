@@ -1,70 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet'); 
+@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet');
 
-html, body, [class*="css"] {
-    font-family: "Allerta Stencil", sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-}
-div.st-emotion-cache-l9bjmx.e1nzilvr5 p{
+html,
+body,
+[class*="css"] {
   font-family: "Allerta Stencil", sans-serif;
   font-size: 18px;
-  font-weight:bold;
+  font-weight: 500;
 }
-header.st-emotion-cache-18ni7ap.ezrtsby2{
-    background-color: #202020;
-    font-family: "Allerta Stencil", sans-serif;
-    font-weight:bold;
-}
-span.st-emotion-cache-10trblm.e1nzilvr1{
-    background-color: #202020;
-    background: -webkit-linear-gradient(#ff7a59, #ffdb76);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-    font-family: "Allerta Stencil", sans-serif;
-}
-button.st-emotion-cache-sa9oi8.ef3psqc5{
-  background-color: #202020;
-  background: -webkit-linear-gradient(#ff7a59, #ffdb76);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+div.st-emotion-cache-l9bjmx.e1nzilvr5 p {
   font-family: "Allerta Stencil", sans-serif;
-    font-weight:bold;
+  font-size: 18px;
+  font-weight: bold;
 }
-div.appview-container.st-emotion-cache-1wrcr25.ea3mdgi9{
-  background-color: #202020;
+
+header.st-emotion-cache-18ni7ap.ezrtsby2 {
+  /* background-color: #ffffff; */
   font-family: "Allerta Stencil", sans-serif;
-    font-weight:bold;
+  font-weight: bold;
 }
-p{
-  background: -webkit-linear-gradient(#ff7a59, #ffdb76);
+
+span.st-emotion-cache-10trblm.e1nzilvr1 {
+  /* background-color: #ffffff; */
+  background: -webkit-linear-gradient(#8b24bb, #0eb0b1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-family: "Allerta Stencil", sans-serif;
-    font-weight:bold;
 }
-element{
+
+button.st-emotion-cache-sa9oi8.ef3psqc5 {
+  /* background-color: #ffffff; */
+  background: -webkit-linear-gradient(#8b24bb, #0eb0b1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Allerta Stencil", sans-serif;
+  font-weight: bold;
+}
+
+div.appview-container.st-emotion-cache-1wrcr25.ea3mdgi9 {
+  /* background-color: #ffffff; */
+  font-family: "Allerta Stencil", sans-serif;
+  font-weight: bold;
+}
+
+p {
+  background: -webkit-linear-gradient(#8b24bb, #0eb0b1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Allerta Stencil", sans-serif;
+  font-weight: bold;
+}
+
+element {
   max-width: 50%;
 }
-div.st-emotion-cache-1kyxreq.e115fcil2{
+
+div.st-emotion-cache-1kyxreq.e115fcil2 {
   display: block;
   max-width: 60%;
 }
 
-span.st-emotion-cache-10trblm.e1nzilvr1{
+span.st-emotion-cache-10trblm.e1nzilvr1 {
   text-decoration: underline;
-  text-decoration-color: #ffdb76;
+  text-decoration-color: #0eb0b1;
 }
 
 #title {
-    background: -webkit-linear-gradient(#ff7a59, #ffdb76);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: "Allerta Stencil", sans-serif;
-    font-weight: bold;
-    font-size: 40px;
-    text-align: center;
+  background: -webkit-linear-gradient(#8b24bb, #0eb0b1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Allerta Stencil", sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
 }
+
 #custom-divider {
-    height: 0.7px; /* Adjust height as needed */
-    background-color: #ffdb76; /* Change to the color you want */
+  height: 0.7px;
+  /* Adjust height as needed */
+  background-color: #0eb0b1;
+  /* Change to the color you want */
 }
