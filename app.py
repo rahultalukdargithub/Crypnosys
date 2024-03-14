@@ -236,9 +236,9 @@ if(df.shape[0]>=200):
                             st.plotly_chart(fig)
                             st.plotly_chart(indicator)
                         except Exception as e:
-                            st.write("Try again with different value of Period and Interval , if its not working then we will Soon Add It ")
+                            st.write("Try again with different value of Period and Interval , if its not working then we will Soon Add It.")
                 except Exception as e: 
-                    st.write("We Will Soon Add It")
+                    st.write("We Will Soon Add It.")
                     
                         
                 y_predicted_new=[]
