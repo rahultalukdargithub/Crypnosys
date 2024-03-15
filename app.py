@@ -231,7 +231,7 @@ if(df.shape[0]>=200):
                             fig.update_layout(title=f'Recent Price of {user_input}',
                                             xaxis_title='Date', yaxis_title='Price',width=890,xaxis_rangeslider_visible=False,height=500,margin=dict(l=50, r=50, t=50, b=50) ) 
                                     
-                            indicator =px.line(x=data.Datetime,y=data.rsi,height =200,width=860)   
+                            indicator =px.line(x=data.Datetime,y=data.rsi,height =200,width=900)   
                             time.sleep(0.25)  
                             st.plotly_chart(fig)
                             st.plotly_chart(indicator)
