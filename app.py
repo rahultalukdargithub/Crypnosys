@@ -135,8 +135,8 @@ if(df.shape[0]>=200):
     data_testing=pd.DataFrame(df['Close'][int(len(df)*0.80):int(len(df))])
 
 
-    # scaler=MinMaxScaler(feature_range=(0,1))
-    scaler=RobustScaler()
+    scaler=MinMaxScaler()
+    # scaler=RobustScaler()
 
     data_training_array = scaler.fit_transform(data_training)
 
@@ -151,7 +151,7 @@ if(df.shape[0]>=200):
 
     x_train,y_train = np.array(x_train),np.array(y_train)
 
-    model = xgb.XGBRegressor(n_estimators=170,learning_rate=0.08, max_depth=3)
+    XGB = xgb.XGBRegressor(n_estimators=170, learning_rate=0.04, max_depth=3)
     x_train = x_train.reshape(x_train.shape[0], -1)
     model.fit(x_train, y_train)
 
@@ -262,17 +262,19 @@ if(df.shape[0]>=200):
 
                 y_predicted_new=scaler.inverse_transform(y_predicted_new)
 
+                st.subheader(f'Prediction of the prices of {user_input} in next 5 days')
+                y_predicted_new1 = y_predicted_new.reshape(1,7)[0]
+
                 today = dt.date.today()
 
                 dates = [today - dt.timedelta(days=i) for i in range(2, -5, -1)]
 
-                st.subheader(f'Prediction of the prices of {user_input} in next 5 days')
-                fig=plt.figure(figsize=(12, 6))
-                plt.plot(dates, y_predicted_new, 'r', marker='o', label='Predicted Price')
-                plt.xlabel('Time')
-                plt.ylabel('Price')
-                plt.legend()
-                st.pyplot(fig)
+                data = pd.DataFrame({'Date': dates, 'Predicted Price': y_predicted_new1})
+
+                fig = px.line(data, x='Date', y='Predicted Price',width=890)
+                fig.update_traces(mode='markers+lines', hovertemplate='Date: %{x}<br>Predicted Price: %{y}')
+                fig.update_layout(xaxis_title='Date', yaxis_title='Predicted Price')
+                st.plotly_chart(fig)
                 if(y_predicted_new[2][0] > y_predicted_new[6][0]):
                     st.write(f'Crypnosys predicts these range of Price {y_predicted_new[6][0]} - {y_predicted_new[2][0]} in {user_input} for the next 5 days')
                 elif(y_predicted_new[2][0] < y_predicted_new[6][0]):
