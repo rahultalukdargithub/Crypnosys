@@ -13,7 +13,7 @@ import requests
 import time
 import pandas_ta as ta
 import plotly.express as px
-from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import RobustScaler,MinMaxScaler
 import xgboost as xgb
 image_path = "logo.png"
 
