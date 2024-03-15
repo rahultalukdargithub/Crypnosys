@@ -151,7 +151,7 @@ if(df.shape[0]>=200):
 
     x_train,y_train = np.array(x_train),np.array(y_train)
 
-    XGB = xgb.XGBRegressor(n_estimators=170, learning_rate=0.04, max_depth=3)
+    model = xgb.XGBRegressor(n_estimators=170, learning_rate=0.04, max_depth=3)
     x_train = x_train.reshape(x_train.shape[0], -1)
     model.fit(x_train, y_train)
 
